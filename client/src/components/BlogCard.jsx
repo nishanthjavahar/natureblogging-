@@ -15,6 +15,14 @@ function BlogCard({ blog, onDelete }) {
   const { isLoggedIn } =
     useContext(AuthContext);
 
+  const displayImage =
+
+    blog.images?.length > 0
+      ? blog.images[0]
+      : blog.image
+      ? blog.image
+      : "https://images.unsplash.com/photo-1546182990-dffeafbe841d";
+
   return (
 
     <div
@@ -32,11 +40,7 @@ function BlogCard({ blog, onDelete }) {
       <Link to={`/blog/${blog._id}`}>
 
         <img
-         src={
-  blog.images?.[0] ||
-  blog.image ||
-  "https://images.unsplash.com/photo-1546182990-dffeafbe841d"
-}
+          src={displayImage}
           alt="Wildlife"
           style={{
             width: "100%",
