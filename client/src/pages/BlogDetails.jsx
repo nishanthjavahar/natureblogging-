@@ -26,7 +26,7 @@ function BlogDetails() {
 
         const res =
           await axios.get(
-            `https://wildguard-backend.onrender.com/api/blogs/${id}`
+            `https://natureblogging.onrender.com/api/blogs/${id}`
           );
 
         setBlog(res.data);

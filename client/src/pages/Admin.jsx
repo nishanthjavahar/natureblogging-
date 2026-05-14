@@ -179,7 +179,7 @@ function Admin() {
     try {
 
       await axios.post(
-        "https://wildguard-backend.onrender.com/api/blogs",
+        "https://natureblogging.onrender.com/api/blogs",
         formData,
         {
           headers: {

@@ -58,7 +58,7 @@ function EditBlog() {
 
         const res =
           await axios.get(
-            `https://wildguard-backend.onrender.com/api/blogs/${id}`
+            `https://natureblogging.onrender.com/api/blogs/${id}`
           );
 
         setTitle(res.data.title);
@@ -208,7 +208,7 @@ function EditBlog() {
     try {
 
       await axios.put(
-        `https://wildguard-backend.onrender.com/api/blogs/${id}`,
+        `https://natureblogging.onrender.com/api/blogs/${id}`,
         formData,
         {
           headers: {

@@ -24,7 +24,7 @@ function Home() {
     try {
 
       const res = await axios.get(
-        "https://wildguard-backend.onrender.com/api/blogs"
+        "https://natureblogging.onrender.com/api/blogs"
       );
 
       setBlogs(res.data);
@@ -42,7 +42,7 @@ function Home() {
     try {
 
       await axios.delete(
-        `https://wildguard-backend.onrender.com/api/blogs/${id}`
+        `https://natureblogging.onrender.com/api/blogs/${id}`
       );
 
       fetchBlogs();
