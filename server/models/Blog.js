@@ -8,10 +8,7 @@ const BlogSchema = new mongoose.Schema({
 
   category: String,
 
-  images: {
-    type: [String],
-    default: [],
-  },
+  images: [String],
 
   createdAt: {
     type: Date,

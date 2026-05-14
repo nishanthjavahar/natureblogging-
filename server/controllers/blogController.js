@@ -5,7 +5,8 @@ const getBlogs = async (req, res) => {
 
   try {
 
-    const blogs = await Blog.find();
+    const blogs =
+      await Blog.find();
 
     res.json(blogs);
 
@@ -119,7 +120,8 @@ const deleteBlog = async (req, res) => {
     );
 
     res.json({
-      message: "Deleted Successfully",
+      message:
+        "Deleted Successfully",
     });
 
   } catch (error) {
