@@ -1,8 +1,6 @@
-import React,
-{
+import React, {
   useEffect,
   useState,
-  useRef,
 } from "react";
 
 import axios from "axios";
@@ -12,21 +10,15 @@ import {
   useParams,
 } from "react-router-dom";
 
-import ReactCrop from "react-image-crop";
-
-import "react-image-crop/dist/ReactCrop.css";
-
 import Navbar from "../components/Navbar";
 
 function EditBlog() {
 
-  const { id } = useParams();
+  const { id } =
+    useParams();
 
   const navigate =
     useNavigate();
-
-  const imgRef =
-    useRef(null);
 
   const [title, setTitle] =
     useState("");
@@ -37,192 +29,36 @@ function EditBlog() {
   const [category, setCategory] =
     useState("");
 
-  const [image, setImage] =
-    useState(null);
+  const [images, setImages] =
+    useState([]);
 
   const [preview, setPreview] =
-    useState("");
-
-  const [crop, setCrop] =
-    useState();
-
-  const [completedCrop,
-    setCompletedCrop] =
-    useState(null);
+    useState([]);
 
   useEffect(() => {
-
-    const fetchBlog = async () => {
-
-      try {
-
-        const res =
-          await axios.get(
-            `https://natureblogging.onrender.com/api/blogs/${id}`
-          );
-
-        setTitle(res.data.title);
-
-        setContent(res.data.content);
-
-        setCategory(
-          res.data.category
-        );
-
-        setPreview(res.data.image);
-
-      } catch (error) {
-
-        console.log(error);
-
-      }
-
-    };
 
     fetchBlog();
 
   }, [id]);
 
-  const cropImage = () => {
-
-    if (
-      !completedCrop ||
-      !imgRef.current
-    ) return;
-
-    const imageElement =
-      imgRef.current;
-
-    const canvas =
-      document.createElement(
-        "canvas"
-      );
-
-    const scaleX =
-      imageElement.naturalWidth /
-      imageElement.width;
-
-    const scaleY =
-      imageElement.naturalHeight /
-      imageElement.height;
-
-    const pixelRatio =
-      window.devicePixelRatio;
-
-    canvas.width =
-      completedCrop.width *
-      pixelRatio;
-
-    canvas.height =
-      completedCrop.height *
-      pixelRatio;
-
-    const ctx =
-      canvas.getContext("2d");
-
-    ctx.setTransform(
-      pixelRatio,
-      0,
-      0,
-      pixelRatio,
-      0,
-      0
-    );
-
-    ctx.imageSmoothingQuality =
-      "high";
-
-    ctx.drawImage(
-      imageElement,
-      completedCrop.x * scaleX,
-      completedCrop.y * scaleY,
-      completedCrop.width *
-        scaleX,
-      completedCrop.height *
-        scaleY,
-      0,
-      0,
-      completedCrop.width,
-      completedCrop.height
-    );
-
-    canvas.toBlob((blob) => {
-
-      if (!blob) return;
-
-      const croppedFile =
-        new File(
-          [blob],
-          "cropped.jpg",
-          {
-            type:
-              "image/jpeg",
-          }
-        );
-
-      setImage(croppedFile);
-
-      setPreview(
-        URL.createObjectURL(
-          croppedFile
-        )
-      );
-
-    },
-    "image/jpeg",
-    1);
-
-  };
-
-  const updateBlog = async (e) => {
-
-    e.preventDefault();
-
-    const formData =
-      new FormData();
-
-    formData.append(
-      "title",
-      title
-    );
-
-    formData.append(
-      "content",
-      content
-    );
-
-    formData.append(
-      "category",
-      category
-    );
-
-    if (image) {
-
-      formData.append(
-        "image",
-        image
-      );
-
-    }
+  const fetchBlog = async () => {
 
     try {
 
-      await axios.put(
-        `https://natureblogging.onrender.com/api/blogs/${id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type":
-              "multipart/form-data",
-          },
-        }
-      );
+      const res =
+        await axios.get(
+          `https://natureblogging.onrender.com/api/blogs/${id}`
+        );
 
-      alert(
-        "Blog Updated Successfully"
-      );
+      setTitle(res.data.title);
 
-      navigate("/");
+      setContent(res.data.content);
+
+      setCategory(res.data.category);
+
+      setPreview(
+        res.data.images || []
+      );
 
     } catch (error) {
 
@@ -232,7 +68,67 @@ function EditBlog() {
 
   };
 
+  const updateBlog =
+    async (e) => {
+
+      e.preventDefault();
+
+      const formData =
+        new FormData();
+
+      formData.append(
+        "title",
+        title
+      );
+
+      formData.append(
+        "content",
+        content
+      );
+
+      formData.append(
+        "category",
+        category
+      );
+
+      images.forEach((img) => {
+
+        formData.append(
+          "images",
+          img
+        );
+
+      });
+
+      try {
+
+        await axios.put(
+          `https://natureblogging.onrender.com/api/blogs/${id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type":
+                "multipart/form-data",
+            },
+          }
+        );
+
+        alert(
+          "Blog Updated Successfully"
+        );
+
+        navigate("/");
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
   return (
+
     <div>
 
       <Navbar />
@@ -260,10 +156,9 @@ function EditBlog() {
             type="text"
             value={title}
             onChange={(e) =>
-              setTitle(
-                e.target.value
-              )
+              setTitle(e.target.value)
             }
+            required
           />
 
           <textarea
@@ -274,6 +169,7 @@ function EditBlog() {
                 e.target.value
               )
             }
+            required
           />
 
           <input
@@ -284,71 +180,59 @@ function EditBlog() {
                 e.target.value
               )
             }
+            required
           />
-
-          {preview && (
-
-            <div>
-
-              <h3>
-                Crop Image
-              </h3>
-
-              <ReactCrop
-                crop={crop}
-                onChange={(c) =>
-                  setCrop(c)
-                }
-                onComplete={(c) =>
-                  setCompletedCrop(c)
-                }
-              >
-
-                <img
-                  ref={imgRef}
-                  src={preview}
-                  alt="Preview"
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "500px",
-                  }}
-                />
-
-              </ReactCrop>
-
-              <br />
-
-              <button
-                type="button"
-                onClick={cropImage}
-              >
-                Crop Image
-              </button>
-
-            </div>
-
-          )}
 
           <input
             type="file"
+            multiple
             accept="image/*"
             onChange={(e) => {
 
-              const file =
-                e.target.files[0];
+              const files =
+                Array.from(
+                  e.target.files
+                );
 
-              if (!file) return;
-
-              setImage(file);
+              setImages(files);
 
               setPreview(
-                URL.createObjectURL(
-                  file
+                files.map((file) =>
+                  URL.createObjectURL(
+                    file
+                  )
                 )
               );
 
             }}
           />
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit,minmax(150px,1fr))",
+              gap: "10px",
+            }}
+          >
+
+            {preview.map(
+              (img, index) => (
+
+                <img
+                  key={index}
+                  src={img}
+                  alt="preview"
+                  style={{
+                    width: "100%",
+                    borderRadius: "10px",
+                  }}
+                />
+
+              )
+            )}
+
+          </div>
 
           <button type="submit">
             Update Blog
@@ -359,7 +243,9 @@ function EditBlog() {
       </div>
 
     </div>
+
   );
+
 }
 
 export default EditBlog;
