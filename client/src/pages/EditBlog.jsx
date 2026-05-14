@@ -35,11 +35,7 @@ function EditBlog() {
   const [preview, setPreview] =
     useState([]);
 
-  useEffect(() => {
-
-    fetchBlog();
-
-  }, [id]);
+useEffect(() => {
 
   const fetchBlog = async () => {
 
@@ -67,6 +63,12 @@ function EditBlog() {
     }
 
   };
+
+  fetchBlog();
+
+}, [id]);
+
+  
 
   const updateBlog =
     async (e) => {
