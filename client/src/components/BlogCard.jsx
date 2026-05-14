@@ -32,7 +32,7 @@ function BlogCard({ blog, onDelete }) {
       <Link to={`/blog/${blog._id}`}>
 
         <img
-          src={
+         src={
   blog.images?.[0] ||
   blog.image ||
   "https://images.unsplash.com/photo-1546182990-dffeafbe841d"

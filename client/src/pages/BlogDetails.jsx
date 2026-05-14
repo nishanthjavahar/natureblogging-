@@ -78,31 +78,19 @@ function BlogDetails() {
           }}
         >
 
-          {blog.images &&
-          blog.images.length > 0 ? (
-
-            blog.images.map(
-              (img, index) => (
-
-                <img
-                  key={index}
-                  src={img}
-                  alt="Wildlife"
-                  style={{
-                    width: "100%",
-                    maxHeight: "500px",
-                    objectFit: "cover",
-                    borderRadius: "12px",
-                  }}
-                />
-
-              )
-            )
-
-          ) : (
+          {(
+            blog.images?.length
+              ? blog.images
+              : blog.image
+              ? [blog.image]
+              : [
+                  "https://images.unsplash.com/photo-1546182990-dffeafbe841d",
+                ]
+          ).map((img, index) => (
 
             <img
-              src="https://images.unsplash.com/photo-1546182990-dffeafbe841d"
+              key={index}
+              src={img}
               alt="Wildlife"
               style={{
                 width: "100%",
@@ -112,7 +100,7 @@ function BlogDetails() {
               }}
             />
 
-          )}
+          ))}
 
         </div>
 
