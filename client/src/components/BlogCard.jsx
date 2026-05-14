@@ -33,9 +33,10 @@ function BlogCard({ blog, onDelete }) {
 
         <img
           src={
-            blog.images?.[0] ||
-            "https://images.unsplash.com/photo-1546182990-dffeafbe841d"
-          }
+  blog.images?.[0] ||
+  blog.image ||
+  "https://images.unsplash.com/photo-1546182990-dffeafbe841d"
+}
           alt="Wildlife"
           style={{
             width: "100%",
