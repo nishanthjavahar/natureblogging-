@@ -18,7 +18,7 @@ router.get("/", getBlogs);
 // CREATE blog
 router.post(
   "/",
-  upload.single("image"),
+  upload.array("images", 10),
   createBlog
 );
 
@@ -50,7 +50,7 @@ router.get("/:id", async (req, res) => {
 // UPDATE blog
 router.put(
   "/:id",
-  upload.single("image"),
+  upload.array("images", 10),
   updateBlog
 );
 

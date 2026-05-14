@@ -24,7 +24,8 @@ function BlogCard({ blog, onDelete }) {
         borderRadius: "14px",
         overflow: "hidden",
         marginBottom: "30px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        boxShadow:
+          "0 4px 12px rgba(0,0,0,0.1)",
       }}
     >
 
@@ -32,7 +33,7 @@ function BlogCard({ blog, onDelete }) {
 
         <img
           src={
-            blog.image ||
+            blog.images?.[0] ||
             "https://images.unsplash.com/photo-1546182990-dffeafbe841d"
           }
           alt="Wildlife"
@@ -46,13 +47,19 @@ function BlogCard({ blog, onDelete }) {
 
       </Link>
 
-      <div style={{ padding: "20px" }}>
+      <div
+        style={{
+          padding: "20px",
+        }}
+      >
 
         <span
           style={{
-            backgroundColor: "#d8f3dc",
+            backgroundColor:
+              "#d8f3dc",
             color: "#1b4332",
-            padding: "6px 12px",
+            padding:
+              "6px 12px",
             borderRadius: "20px",
             fontSize: "14px",
           }}
@@ -60,7 +67,11 @@ function BlogCard({ blog, onDelete }) {
           {blog.category}
         </span>
 
-        <h2 style={{ marginTop: "15px" }}>
+        <h2
+          style={{
+            marginTop: "15px",
+          }}
+        >
           {blog.title}
         </h2>
 
@@ -81,20 +92,28 @@ function BlogCard({ blog, onDelete }) {
           }}
         >
 
-          <Link to={`/blog/${blog._id}`}>
+          <Link
+            to={`/blog/${blog._id}`}
+          >
+
             <button>
               Read More
             </button>
+
           </Link>
 
           {isLoggedIn && (
 
             <>
 
-              <Link to={`/edit/${blog._id}`}>
+              <Link
+                to={`/edit/${blog._id}`}
+              >
+
                 <button>
                   Edit
                 </button>
+
               </Link>
 
               <button
@@ -104,6 +123,7 @@ function BlogCard({ blog, onDelete }) {
                 style={{
                   backgroundColor:
                     "#d62828",
+                  color: "white",
                 }}
               >
                 Delete

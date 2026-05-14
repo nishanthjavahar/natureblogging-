@@ -34,9 +34,12 @@ const createBlog = async (req, res) => {
 
       category: req.body.category,
 
-      image: req.file
-        ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
-        : "",
+      images: req.files
+        ? req.files.map(
+            (file) =>
+              `${req.protocol}://${req.get("host")}/uploads/${file.filename}`
+          )
+        : [],
 
     });
 
@@ -72,10 +75,16 @@ const updateBlog = async (req, res) => {
 
     };
 
-    if (req.file) {
+    if (
+      req.files &&
+      req.files.length > 0
+    ) {
 
-      updatedData.image =
-        `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+      updatedData.images =
+        req.files.map(
+          (file) =>
+            `${req.protocol}://${req.get("host")}/uploads/${file.filename}`
+        );
 
     }
 

@@ -1,14 +1,27 @@
 const mongoose = require("mongoose");
 
 const BlogSchema = new mongoose.Schema({
+
   title: String,
+
   content: String,
+
   category: String,
-  image: String,
+
+  images: {
+    type: [String],
+    default: [],
+  },
+
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
+
 });
 
-module.exports = mongoose.model("Blog", BlogSchema);
+module.exports =
+  mongoose.model(
+    "Blog",
+    BlogSchema
+  );

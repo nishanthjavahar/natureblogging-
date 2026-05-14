@@ -36,11 +36,11 @@ function Admin() {
   const [category, setCategory] =
     useState("");
 
-  const [image, setImage] =
-    useState(null);
+  const [images, setImages] =
+    useState([]);
 
   const [preview, setPreview] =
-    useState("");
+    useState([]);
 
   const [crop, setCrop] =
     useState();
@@ -48,9 +48,6 @@ function Admin() {
   const [completedCrop,
     setCompletedCrop] =
     useState(null);
-
-  // IMPORTANT:
-  // Login check AFTER hooks
 
   if (!isLoggedIn) {
 
@@ -135,13 +132,13 @@ function Admin() {
           }
         );
 
-      setImage(croppedFile);
+      setImages([croppedFile]);
 
-      setPreview(
+      setPreview([
         URL.createObjectURL(
           croppedFile
-        )
-      );
+        ),
+      ]);
 
     },
     "image/jpeg",
@@ -171,10 +168,14 @@ function Admin() {
       category
     );
 
-    formData.append(
-      "image",
-      image
-    );
+    images.forEach((img) => {
+
+      formData.append(
+        "images",
+        img
+      );
+
+    });
 
     try {
 
@@ -196,8 +197,8 @@ function Admin() {
       setTitle("");
       setContent("");
       setCategory("");
-      setImage(null);
-      setPreview("");
+      setImages([]);
+      setPreview([]);
 
     } catch (error) {
 
@@ -269,7 +270,7 @@ function Admin() {
             required
           />
 
-          {preview && (
+          {preview.length > 0 && (
 
             <div>
 
@@ -289,7 +290,7 @@ function Admin() {
 
                 <img
                   ref={imgRef}
-                  src={preview}
+                  src={preview[0]}
                   alt="Preview"
                   style={{
                     maxWidth: "100%",
@@ -314,25 +315,55 @@ function Admin() {
 
           <input
             type="file"
+            multiple
             accept="image/*"
             onChange={(e) => {
 
-              const file =
-                e.target.files[0];
+              const files =
+                Array.from(
+                  e.target.files
+                );
 
-              if (!file) return;
-
-              setImage(file);
+              setImages(files);
 
               setPreview(
-                URL.createObjectURL(
-                  file
+                files.map((file) =>
+                  URL.createObjectURL(
+                    file
+                  )
                 )
               );
 
             }}
             required
           />
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit,minmax(150px,1fr))",
+              gap: "10px",
+            }}
+          >
+
+            {preview.map(
+              (img, index) => (
+
+                <img
+                  key={index}
+                  src={img}
+                  alt="preview"
+                  style={{
+                    width: "100%",
+                    borderRadius: "10px",
+                  }}
+                />
+
+              )
+            )}
+
+          </div>
 
           <button type="submit">
             Add Blog

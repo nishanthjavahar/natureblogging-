@@ -50,35 +50,71 @@ function BlogDetails() {
   }
 
   return (
+
     <div>
 
       <Navbar />
 
       <div
         style={{
-          width: "80%",
+          width: "85%",
           margin: "40px auto",
           backgroundColor: "white",
           borderRadius: "14px",
           overflow: "hidden",
           boxShadow:
             "0 4px 12px rgba(0,0,0,0.1)",
+          paddingBottom: "30px",
         }}
       >
 
-        <img
-          src={
-            blog.image ||
-            "https://images.unsplash.com/photo-1546182990-dffeafbe841d"
-          }
-          alt="Wildlife"
+        <div
           style={{
-            width: "100%",
-            maxHeight: "600px",
-            objectFit: "contain",
-            backgroundColor: "#eef5ee",
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(300px,1fr))",
+            gap: "20px",
+            padding: "20px",
           }}
-        />
+        >
+
+          {blog.images &&
+          blog.images.length > 0 ? (
+
+            blog.images.map(
+              (img, index) => (
+
+                <img
+                  key={index}
+                  src={img}
+                  alt="Wildlife"
+                  style={{
+                    width: "100%",
+                    maxHeight: "500px",
+                    objectFit: "cover",
+                    borderRadius: "12px",
+                  }}
+                />
+
+              )
+            )
+
+          ) : (
+
+            <img
+              src="https://images.unsplash.com/photo-1546182990-dffeafbe841d"
+              alt="Wildlife"
+              style={{
+                width: "100%",
+                maxHeight: "500px",
+                objectFit: "cover",
+                borderRadius: "12px",
+              }}
+            />
+
+          )}
+
+        </div>
 
         <div
           style={{
@@ -111,6 +147,7 @@ function BlogDetails() {
             style={{
               lineHeight: "1.8",
               color: "#444",
+              marginTop: "20px",
             }}
           >
             {blog.content}
@@ -121,6 +158,7 @@ function BlogDetails() {
       </div>
 
     </div>
+
   );
 }
 
