@@ -38,7 +38,7 @@ const createBlog = async (req, res) => {
       images: req.files
         ? req.files.map(
             (file) =>
-              `${req.protocol}://${req.get("host")}/uploads/${file.filename}`
+              `https://natureblogging.onrender.com/uploads/${file.filename}`
           )
         : [],
 
@@ -84,7 +84,7 @@ const updateBlog = async (req, res) => {
       updatedData.images =
         req.files.map(
           (file) =>
-            `${req.protocol}://${req.get("host")}/uploads/${file.filename}`
+            `https://natureblogging.onrender.com/uploads/${file.filename}`
         );
 
     }
