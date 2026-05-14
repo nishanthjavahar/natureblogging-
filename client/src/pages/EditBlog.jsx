@@ -50,40 +50,38 @@ function EditBlog() {
     setCompletedCrop] =
     useState(null);
 
-useEffect(() => {
+  useEffect(() => {
 
-  fetchBlog();
+    const fetchBlog = async () => {
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      try {
 
-}, []);
+        const res =
+          await axios.get(
+            `https://wildguard-backend.onrender.com/api/blogs/${id}`
+          );
 
-  const fetchBlog = async () => {
+        setTitle(res.data.title);
 
-    try {
+        setContent(res.data.content);
 
-      const res =
-        await axios.get(
-          `https://wildguard-backend.onrender.com/api/blogs/${id}`
+        setCategory(
+          res.data.category
         );
 
-      setTitle(res.data.title);
+        setPreview(res.data.image);
 
-      setContent(res.data.content);
+      } catch (error) {
 
-      setCategory(
-        res.data.category
-      );
+        console.log(error);
 
-      setPreview(res.data.image);
+      }
 
-    } catch (error) {
+    };
 
-      console.log(error);
+    fetchBlog();
 
-    }
-
-  };
+  }, [id]);
 
   const cropImage = () => {
 

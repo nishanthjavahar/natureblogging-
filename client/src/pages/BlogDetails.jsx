@@ -1,5 +1,4 @@
-import React,
-{
+import React, {
   useEffect,
   useState,
 } from "react";
@@ -19,32 +18,30 @@ function BlogDetails() {
   const [blog, setBlog] =
     useState(null);
 
-useEffect(() => {
+  useEffect(() => {
 
-  fetchBlog();
+    const fetchBlog = async () => {
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      try {
 
-}, []);
+        const res =
+          await axios.get(
+            `https://wildguard-backend.onrender.com/api/blogs/${id}`
+          );
 
-  const fetchBlog = async () => {
+        setBlog(res.data);
 
-    try {
+      } catch (error) {
 
-      const res =
-        await axios.get(
-          `https://wildguard-backend.onrender.com/api/blogs/${id}`
-        );
+        console.log(error);
 
-      setBlog(res.data);
+      }
 
-    } catch (error) {
+    };
 
-      console.log(error);
+    fetchBlog();
 
-    }
-
-  };
+  }, [id]);
 
   if (!blog) {
 
