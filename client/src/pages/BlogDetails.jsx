@@ -19,7 +19,7 @@ function BlogDetails() {
   const [blog, setBlog] =
     useState(null);
 
-  useEffect(() => {
+useEffect(() => {
 
   fetchBlog();
 

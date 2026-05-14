@@ -50,11 +50,13 @@ function EditBlog() {
     setCompletedCrop] =
     useState(null);
 
-  useEffect(() => {
+useEffect(() => {
 
-    fetchBlog();
+  fetchBlog();
 
-  }, []);
+  // eslint-disable-next-line
+
+}, []);
 
   const fetchBlog = async () => {
 
