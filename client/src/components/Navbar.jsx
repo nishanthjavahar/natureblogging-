@@ -32,15 +32,21 @@ function Navbar() {
 
   return (
     <nav
-      style={{
-        backgroundColor: "#d8f3dc",
-        padding: "15px 30px",
-        display: "flex",
-        justifyContent:
-          "space-between",
-        alignItems: "center",
-      }}
-    >
+  style={{
+    backgroundColor: "#d8f3dc",
+    padding: "15px 30px",
+    display: "flex",
+    justifyContent:
+      "space-between",
+    alignItems: "center",
+
+    position: "sticky",
+    top: "0",
+    zIndex: "999",
+    width: "100%",
+    boxSizing: "border-box",
+  }}
+>
 
       <h2
         style={{
